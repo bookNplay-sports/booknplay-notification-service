@@ -19,6 +19,7 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
     private final BookingConfirmedTemplate bookingConfirmedTemplate;
     private final BookingCancelledTemplate bookingCancelledTemplate;
     private final BookingReminderTemplate bookingReminderTemplate;
+    private final ProfileUpdateTemplate profileUpdateTemplate;
 
     @Override
     @Async
@@ -50,6 +51,11 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
 
         } else if ("BOOKING_REMINDER".equalsIgnoreCase(request.getTemplateType())) {
             message.setText(bookingReminderTemplate.getEmailBody(
+                    request.getBookingDetails()
+            ));
+        }
+        else if ("PROFILE_UPDATE".equalsIgnoreCase(request.getTemplateType())) {
+            message.setText(profileUpdateTemplate.getEmailBody(
                     request.getBookingDetails()
             ));
         }
